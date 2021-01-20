@@ -160,10 +160,8 @@ function Draw(){
         Level_name = 'No Bad'
     }else if(Level < 7){
         Level_name = 'Nice'
-    }else if(Level < 9){
-        Level_name = 'God'
     }else{
-        Level_name = 'Unknown Level'
+        Level_name = 'God'
     }
 
     if(Coordinates_enable){
