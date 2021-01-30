@@ -136,7 +136,7 @@ function Draw(){
     var Health_text = "" + health;
     var Money_text = "" + money;
     
-    var font = font2 = Render.AddFont( "verdana.ttf", 10, 900);
+    var font = font2 = Render.GetFont("verdana.ttf", 10, true);
     
     //------------------------------
     //Judgment
