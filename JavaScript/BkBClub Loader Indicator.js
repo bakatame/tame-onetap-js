@@ -46,7 +46,7 @@ function Draw (){
     /* var Def_A = 8 + Math.sin(Math.abs(-Math.PI + Globals.Realtime() * 0.6 / 1 % (Math.PI * 2))) * 12 */
     var Def_Color = [194,102,255,255];
     var Circle_Color =  [182, 236, 34,255];
-    var Font = Render.AddFont("verdana.ttf", 10, 800);
+    var Font = Render.GetFont("verdana.ttf", 10, true);
     var x = UI.GetValue(["Visuals", "BkBClub", "BkBClub", "Indicator_X"]);
     var y = UI.GetValue(["Visuals", "BkBClub", "BkBClub", "Indicator_Y"]);
 
