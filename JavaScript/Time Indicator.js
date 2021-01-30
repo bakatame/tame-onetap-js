@@ -166,7 +166,7 @@ function Draw(){
     var Color_enable = UI.GetValue(["Visuals", "Time Indicator", "Time Indicator","Custom Color"]);
     var Coordinates_enable = UI.GetValue(["Visuals", "Time Indicator", "Time Indicator","Enable Coordinates"]);
 
-    var Font = Render.AddFont("verdanab.ttf", 10, 800);
+    var Font = Render.GetFont("verdana.ttf", 10, true);
 
     var curTime = Globals.Curtime();
     time_last_update = curTime;
