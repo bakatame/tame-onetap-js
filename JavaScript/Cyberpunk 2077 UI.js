@@ -1,9 +1,10 @@
 /********************************************
 *
 *             Cyberpunk 2077 UI
-*           Create by Robonyantame
+*           Create by Robonyantame  https://www.onetap.com/members/robonyantame.103584
 *           Create Date:2020/12/21
 *                 18:02:35
+*        Fix By XieShenDaDa [zhende] https://www.onetap.com/members/xieshendada.176/
 *
 //-----------------------------------------\\
 *
@@ -218,12 +219,12 @@ function get_icon(a) {
 // So the code will look bad
 // Sorry! :3
 function def_font(size){
-    var font = Render.AddFont('bahnschrift.ttf',size,800);
+	var font = Render.GetFont("bahnschrift.ttf",size,true);
     return font;
 }
 
 function Weapon_font(size){
-    var font = Render.AddFont('astriumwep.ttf',size,800);
+	var font = Render.GetFont("astriumwep.ttf",size,true);
     return font;
 }
 
