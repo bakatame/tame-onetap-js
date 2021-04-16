@@ -180,7 +180,7 @@ function Draw(){
     Render.String( x+23, y, 1, Health_text+"hp", [250 - health * 2.5, 5 + health * 2.5, 0, 255], font );
     Render.GradientRect( x+151, y-20, 157, 20, 1, [ 45, 45, 45, 255], [ 45, 45, 45, 255]);
     Render.GradientRect( x+308, y-20, 20, 20, 1, [45, 45, 45, 255 ], [ 45, 45, 45, 0]);
-    Render.String( x+165, y-17, 0, "unknown | Lever "+Level+" (+"+Level2+"xp)", [255,255,255,255], font2 );
+    Render.String( x+165, y-17, 0, "unknown | Level "+Level+" (+"+Level2+"xp)", [255,255,255,255], font2 );
     Render.GradientRect( x+154, y+8, 120, 20, 1, [ 45, 45, 45, 255], [ 45, 45, 45, 255]);
     Render.GradientRect( x+274, y+8, 20, 20, 1, [45, 45, 45, 255 ], [ 45, 45, 45, 0]);
     Render.String( x+165, y+10, 0, ""+Level_name, [222, 158, 12,255], font2 );
