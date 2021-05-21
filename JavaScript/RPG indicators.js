@@ -5,6 +5,10 @@
 *           Create Date:2020/12/21
 *                 18:02:35
 *
+//==========================================\\
+* 
+*                Good Lucy :3
+*
 ********************************************/
 
 //==========================================================================================================\\
@@ -13,33 +17,36 @@
 //Add New Table
 UI.AddSubTab(["Visuals", "SUBTAB_MGR"], "RPG indicators");
 
+//csgohvh.com
+//welcome :3
 UI.AddSliderInt(["Visuals", "RPG indicators", "RPG indicators"], ">>-  RPG indicators -<<", 0, 0);
 UI.AddSliderInt(["Visuals", "RPG indicators", "RPG indicators"], ">>-  Create by Robonyantame  -<<", 0, 0);
+UI.AddSliderInt(["Visuals", "RPG indicators", "RPG indicators"], ">>-  https://hvhcsgo.com  -<<", -1, 0);
 
-//Enable my bad Indicator
-UI.AddCheckbox(["Visuals", "RPG indicators", "RPG indicators"],"Enable Indicator"); 
+//Disable Draw csgo ui, Enable my bad UI
+UI.AddCheckbox(["Visuals", "RPG indicators", "RPG indicators"], "Enable Indicator");
 
 //Enable Coordinates
-UI.AddSliderInt(["Visuals", "RPG indicators", "RPG indicators"], "", -1, 0);
-UI.AddCheckbox(["Visuals", "RPG indicators", "RPG indicators"],"Enable Coordinates");
+UI.AddCheckbox(["Visuals", "RPG indicators", "RPG indicators"], "Enable Coordinates");
 
 //Set Indicator Coordinates
 UI.AddSliderInt(["Visuals", "RPG indicators", "RPG indicators"], "Indicator_X", 0, Render.GetScreenSize()[0]);
 UI.AddSliderInt(["Visuals", "RPG indicators", "RPG indicators"], "Indicator_Y", 0, Render.GetScreenSize()[1]);
 
 //FuCk YoU :)
-UI.SetEnabled(["Config", "Cheat", "General", "RAGE QUIT"], 0)
+UI.SetEnabled(["Config", "Cheat", "General", "RAGE QUIT"], 0);
 //==========================================================================================================\\
 
 //==========================================================================================================\\
 //API and Library
 //------------------------------
-function render_arc(x, y, radius, radius_inner, start_angle, end_angle, segments, color)
-{
+
+//Thanks Circular Desync Indicators :3
+//Sorry I don't know who the Coder is
+function render_arc(x, y, radius, radius_inner, start_angle, end_angle, segments, color) {
     segments = 360 / segments;
 
-    for (var i = start_angle; i < start_angle + end_angle; i = i + segments)
-    {
+    for (var i = start_angle; i < start_angle + end_angle; i = i + segments) {
 
         var rad = i * Math.PI / 180;
         var rad2 = (i + segments) * Math.PI / 180;
@@ -62,146 +69,189 @@ function render_arc(x, y, radius, radius_inner, start_angle, end_angle, segments
         var x2_outer = x + rad2_cos * radius;
         var y2_outer = y + rad2_sin * radius;
 
-        Render.Polygon( [
-            [ x1_outer, y1_outer ],
-            [ x2_outer, y2_outer ],
-            [ x1_inner, y1_inner ] ],
+        Render.Polygon([
+                [x1_outer, y1_outer],
+                [x2_outer, y2_outer],
+                [x1_inner, y1_inner]
+            ],
             color
         );
 
-        Render.Polygon( [
-            [ x1_inner, y1_inner ],
-            [ x2_outer, y2_outer ],
-            [ x2_inner, y2_inner ] ],
+        Render.Polygon([
+                [x1_inner, y1_inner],
+                [x2_outer, y2_outer],
+                [x2_inner, y2_inner]
+            ],
             color
         );
     }
 }
 
-//BetterUI and Better Colors API
+//Thanks BetterUI and Better Colors API :3
+//Sorry I don't know who the Coder is
 //Dragging properties Variable.
-var area = {};
+var area = {
+    new: function(x, y, w, h) {
+        const area_info_t = {
+            x: x,
+            y: y,
+            x2: x + w,
+            y2: y + h
+        };
 
-area.new = function(x, y, w, h)
-{
-    const area_info_t = {
-        x: x,
-        y: y,
-        x2: x + w,
-        y2: y + h
-    };
+        return area_info_t;
+    },
+    in_bounds: function(area, point) {
+        return point.x > area.x && point.x < area.x2 && point.y > area.y && point.y < area.y2;
+    }
+};
 
-    return area_info_t;
-}
+var point = {
+    new: function(x, y) {
+        const point_info_t = {
+            x: x,
+            y: y
+        };
 
-area.in_bounds = function(area, point)
-{
-    return point.x > area.x && point.x < area.x2 && point.y > area.y && point.y < area.y2;
-}
+        return point_info_t;
+    },
+};
 
-var point = {};
-
-point.new = function(x, y)
-{
-    const point_info_t = {
-        x: x,
-        y: y
-    };
-
-    return point_info_t;
-}
 //==========================================================================================================\\
 
 //==========================================================================================================\\
 //Function
 //------------------------------
-function Draw(){
+function RPG_Draw() {
 
+    if (!Entity.IsAlive(Entity.GetLocalPlayer())) { return; }
     //------------------------------
     //Variable
     //------------------------------
+
+    var font = Render.GetFont("verdana.ttf", 10, true);
+
     var enable = UI.GetValue(["Visuals", "RPG indicators", "RPG indicators", "Enable Indicator"])
-    var Coordinates_enable = UI.GetValue(["Visuals", "RPG indicators", "RPG indicators","Enable Coordinates"]);
+    var Coordinates_enable = UI.GetValue(["Visuals", "RPG indicators", "RPG indicators", "Enable Coordinates"]);
 
     var x = UI.GetValue(["Visuals", "RPG indicators", "RPG indicators", "Indicator_X"]);
     var y = UI.GetValue(["Visuals", "RPG indicators", "RPG indicators", "Indicator_Y"]);
 
     var me = Entity.GetLocalPlayer();
-    var health = Entity.GetProp(me,"CBasePlayer", "m_iHealth");
+    var health = Entity.GetProp(me, "CBasePlayer", "m_iHealth");
     var armor = Entity.GetProp(me, "CCSPlayerResource", "m_iArmor");
     var money = Entity.GetProp(me, "CCSPlayer", "m_iAccount");
-    
-    var Avatar = Render.AddTexture("ot/img/666.jpg");
+    var player_name = Cheat.GetUsername();
 
-    var Health_text = "" + health;
-    var Money_text = "" + money;
-    
-    var font = font2 = Render.GetFont("verdana.ttf", 10, true);
-    
-    //------------------------------
-    //Judgment
-    //------------------------------
-    if(iAlpha > 1){
-        iAlpha--;
+    if (RPG_iAlpha > 1) {
+        RPG_iAlpha--;
     }
 
-    if(getExp > Levelexp){
-        getExp = 0;
-        Level++;
-        Levelexp = Levelexp + 30;
+    if (RPG_getExp > RPG_Levelexp) {
+        RPG_getExp = 0;
+        RPG_Level++;
+        RPG_Levelexp = RPG_Levelexp + 30;
     }
-    if(health == "m_iHealth" || money == "m_iAccount"){
-        Health_text = "0";
-        Money_text = "0";
-    }
-    if(Level < 3){
-        Level_name = 'Noob'
-    }else if(Level < 5){
-        Level_name = 'No Bad'
-    }else if(Level < 7){
-        Level_name = 'Nice'
-    }else{
-        Level_name = 'God'
+    if (health == "m_iHealth" || money == "m_iAccount") {
+        text.Health_text = "0hp";
+        text.Money_text = "0hp";
     }
 
-    if(Coordinates_enable){
+    //Sherwood Dungeon Level
+    //https://sherwooddungeon.fandom.com/wiki/Level_Ranking_System
+    switch (RPG_Level) {
+        case 0:
+        case 1:
+            RPG_Level_name = 'Novice'
+            break;
+        case 2:
+            RPG_Level_name = 'Apprentice'
+            break;
+        case 3:
+            RPG_Level_name = 'Journeyman'
+            break;
+        case 4:
+            RPG_Level_name = 'Pathfinder'
+            break;
+        case 5:
+            RPG_Level_name = 'Squire'
+            break;
+        case 6:
+            RPG_Level_name = 'Adventurer'
+            break;
+        case 7:
+            RPG_Level_name = 'Scout'
+            break;
+        case 8:
+            RPG_Level_name = 'Guardian'
+            break;
+        case 9:
+            RPG_Level_name = 'Fighter'
+            break;
+        case 10:
+            RPG_Level_name = 'Brawler'
+            break;
+    }
+
+    var text = {
+        RPG_Level_name: "Level",
+        Health_text: health + "hp",
+        Money_text: " | $" + money,
+        Level_text: player_name + " | Lever " + RPG_Level + " (+" + RPG_Level2 + "xp)",
+    };
+
+    const Level_w = Render.TextSize(text.Level_text, font)[0];
+    const Money_w = Render.TextSize(text.Money_text, font)[0];
+    const Levelname_w = Render.TextSize(RPG_Level_name, font)[0];
+
+    //Avatar Path
+    var Avatar = Render.AddTexture("ot/img/Avatar.png");
+
+    if (Coordinates_enable) {
         UI.SetEnabled(["Visuals", "RPG indicators", "RPG indicators", "Indicator_X"], 1);
         UI.SetEnabled(["Visuals", "RPG indicators", "RPG indicators", "Indicator_Y"], 1);
-     }else{
-       UI.SetEnabled(["Visuals", "RPG indicators", "RPG indicators", "Indicator_X"], 0);
-       UI.SetEnabled(["Visuals", "RPG indicators", "RPG indicators", "Indicator_Y"], 0);
-  }
+    } else {
+        UI.SetEnabled(["Visuals", "RPG indicators", "RPG indicators", "Indicator_X"], 0);
+        UI.SetEnabled(["Visuals", "RPG indicators", "RPG indicators", "Indicator_Y"], 0);
+    }
     //------------------------------
     //Render
     //------------------------------
-    if(enable){
-    Render.GradientRect( x+6, y-6, 41, 28, 1, [ 45, 45, 45, 255], [ 45, 45, 45, 255]);
-    Render.GradientRect( x-14, y-6, 20, 28, 1, [ 45, 45, 45, 0], [ 45, 45, 45, 255]);
-    Render.String( x+23, y, 1, Health_text+"hp", [250 - health * 2.5, 5 + health * 2.5, 0, 255], font );
-    Render.GradientRect( x+151, y-20, 157, 20, 1, [ 45, 45, 45, 255], [ 45, 45, 45, 255]);
-    Render.GradientRect( x+308, y-20, 20, 20, 1, [45, 45, 45, 255 ], [ 45, 45, 45, 0]);
-    Render.String( x+165, y-17, 0, "unknown | Level "+Level+" (+"+Level2+"xp)", [255,255,255,255], font2 );
-    Render.GradientRect( x+154, y+8, 120, 20, 1, [ 45, 45, 45, 255], [ 45, 45, 45, 255]);
-    Render.GradientRect( x+274, y+8, 20, 20, 1, [45, 45, 45, 255 ], [ 45, 45, 45, 0]);
-    Render.String( x+165, y+10, 0, ""+Level_name, [222, 158, 12,255], font2 );
-    Render.String( x+182, y+10, 0, "       | $"+Money_text, [255,255,255,255], font2 );
+    if (enable) {
 
-    Render.TexturedRect( x+62, y-33, 79, 79, Avatar);
-    Render.FilledCircle(x+101, y+45, 15, [60, 169, 247,200] );
-    render_arc(x+101, y+7, 57, 39, 270, 360, 50, [45, 45, 45, 255])
-    render_arc(x+101, y+7, 57, 56, -7, (health * 3.32), 50, [250 - health * 2.5, 5 + health * 2.5, 0, 255])
-    render_arc(x+101, y+7, 42, 41, 90, (armor * 3.53), 50, [60, 169, 247,255])
-    Render.String( x+101, y+32, 1, ""+Level, [255,255,255,255], font2 )
+        // Health
+        Render.GradientRect(x + 6, y - 6, 41, 28, 1, [45, 45, 45, 255], [45, 45, 45, 255]);
+        Render.GradientRect(x - 14, y - 6, 20, 28, 1, [45, 45, 45, 0], [45, 45, 45, 255]);
+        Render.String(x + 23, y, 1, text.Health_text, [250 - health * 2.5, 5 + health * 2.5, 0, 255], font);
 
-    UI.SetEnabled(["Visuals", "RPG indicators", "RPG indicators", ""], 1);
-    UI.SetEnabled(["Visuals", "RPG indicators", "RPG indicators","Enable Coordinates"], 1);
+        // Username + Level
+        Render.GradientRect(x + 150, y - 20, Level_w + 25, 22, 1, [45, 45, 45, 255], [45, 45, 45, 255]);
+        Render.GradientRect(x + 150 + Level_w + 25, y - 20, 20, 22, 1, [45, 45, 45, 255], [45, 45, 45, 10]);
+        Render.String(x + 165, y - 17, 0, text.Level_text, [255, 255, 255, 255], font);
 
-}else{
+        Render.GradientRect(x + 150, y + 8, Money_w + Levelname_w + 25, 22, 1, [45, 45, 45, 255], [45, 45, 45, 255]);
+        Render.GradientRect(x + 150 + Levelname_w + Money_w + 25, y + 8, 20, 22, 1, [45, 45, 45, 255], [45, 45, 45, 10]);
+        Render.String(x + 165, y + 11, 0, RPG_Level_name, [250, 166, 24, 255], font);
+        Render.String(x + 165 + Levelname_w, y + 11, 0, text.Money_text, [255, 255, 255, 255], font);
 
-    UI.SetEnabled(["Visuals", "RPG indicators", "RPG indicators", ""], 0);
-    UI.SetEnabled(["Visuals", "RPG indicators", "RPG indicators","Enable Coordinates"], 0);
+        Render.TexturedRect(x + 62, y - 33, 79, 79, Avatar);
+        Render.FilledCircle(x + 101, y + 45, 15, [60, 169, 247, 200]);
+        render_arc(x + 101, y + 7, 57, 39, 270, 360, 50, [45, 45, 45, 255])
+        if (health > 100) {
+            render_arc(x + 101, y + 7, 57, 56, -7, 332, 50, [0, 255, 0, 255])
+        } else {
+            render_arc(x + 101, y + 7, 57, 56, -7, (health * 3.32), 50, [250 - health * 2.5, 5 + health * 2.5, 0, 255])
+        }
+        render_arc(x + 101, y + 7, 42, 41, 90, (armor * 3.53), 50, [60, 169, 247, 255])
+        Render.String(x + 101, y + 32, 1, RPG_Level.toString(), [255, 255, 255, 255], font)
 
-}
+        UI.SetEnabled(["Visuals", "RPG indicators", "RPG indicators", "Enable Coordinates"], 1);
+
+    } else {
+
+        UI.SetEnabled(["Visuals", "RPG indicators", "RPG indicators", "Enable Coordinates"], 0);
+
+    }
 
     //------------------------------
     //BetterUI and Better Colors API
@@ -209,10 +259,8 @@ function Draw(){
     //Create dragging properties.
     const window_area = area.new(x, y, 200, 32);
     const mouse_pos = point.new(Input.GetCursorPosition()[0], Input.GetCursorPosition()[1]);
-    if (Input.IsKeyPressed(1) && UI.IsMenuOpen())
-    {
-        if (area.in_bounds(window_area, mouse_pos))
-        {
+    if (Input.IsKeyPressed(1) && UI.IsMenuOpen()) {
+        if (area.in_bounds(window_area, mouse_pos)) {
             UI.SetValue(["Visuals", "RPG indicators", "RPG indicators", "Indicator_X"], mouse_pos.x - 100);
             UI.SetValue(["Visuals", "RPG indicators", "RPG indicators", "Indicator_Y"], mouse_pos.y - 10);
         }
@@ -227,75 +275,83 @@ function Draw(){
 //Sorry,I Copy your hub js
 //------------------------------
 
-var iAlpha = 0, iExp = 0, getExp = 0, Level = 1, Levelexp = 30, iKills = 0, Level2 = 0 ,Level_name = 'noob';
+var RPG_iAlpha = 0,
+    RPG_iExp = 0,
+    RPG_getExp = 0,
+    RPG_Level = 1,
+    RPG_Levelexp = 30,
+    RPG_iKills = 0,
+    RPG_Level2 = 0,
+    RPG_Level_name = 'hi, There is nothing interesting here. <3';
 
 //Out match is ended
-function EVENT_MATCH_END()
-{
-    RESET();
-    //Next map
-    iExp = 0, getExp = 0,Level = 1;
+function RPG_EVENT_MATCH_END() {
+    RPG_RESET();
 }
 
 //Setup to default everything at player spawn
-function EVENT_PLAYER_SPAWN()
-{
-    PlayerIndex = Event.GetInt("userid"); 
-    iPlayerIndex = Entity.GetEntityFromUserID(PlayerIndex);
-    
+function RPG_EVENT_PLAYER_SPAWN() {
+    RPG_PlayerIndex = Event.GetInt("userid");
+    RPG_iPlayerIndex = Entity.GetEntityFromUserID(RPG_PlayerIndex);
+
     //Reset for us
-    if(Entity.GetLocalPlayer() == iPlayerIndex)    RESET();
+    if (Entity.GetLocalPlayer() == RPG_iPlayerIndex) RPG_RESET();
 }
 
 //Setup to default everything at round start
-function EVENT_ROUND_START()
-{
-    RESET();
-    
+function RPG_EVENT_ROUND_START() {
+    RPG_RESET();
+
 }
 
-function RESET()
-{
-    iAlpha = 0;
-} 
+function RPG_RESET() {
+    RPG_iAlpha = 0;
+}
 
 //------------------------------
 
-function EVENT_DEATH()
-{
+function RPG_EVENT_DEATH() {
     //Get them
-    iVictim = Event.GetInt("userid"); 
-    iVictim_index = Entity.GetEntityFromUserID(iVictim);
-    iAttacker = Event.GetInt("attacker"); 
-    iAttacker_index = Entity.GetEntityFromUserID(iAttacker);
-  
-    if(Entity.GetLocalPlayer() == iVictim_index && Entity.GetLocalPlayer() !== iAttacker_index)    return; 
-  
-    //A kill count only for us + info
-    if(Entity.GetLocalPlayer() == iAttacker_index)
-    {
+    RPG_iVictim = Event.GetInt("userid");
+    RPG_iVictim_index = Entity.GetEntityFromUserID(RPG_iVictim);
+    RPG_iAttacker = Event.GetInt("attacker");
+    RPG_iAttacker_index = Entity.GetEntityFromUserID(RPG_iAttacker);
+
+    if (Entity.GetLocalPlayer() == RPG_iVictim_index && Entity.GetLocalPlayer() !== RPG_iAttacker_index) return;
+
+    if (Entity.GetLocalPlayer() == RPG_iVictim_index && Entity.GetLocalPlayer() == RPG_iAttacker_index) {
         //Simulating Exp
-        iExp = getExp;
+        RPG_iExp = RPG_getExp;
         //Frame count and transparency
-        iAlpha = 255;
+        RPG_iAlpha = 255;
         //Reset if MAX (or remove if u want)
-        getExp = getExp +20;
-        Level2 = Level2 + 20;
+        RPG_getExp = RPG_getExp - 10;
+        RPG_Level2 = RPG_Level2 - 10;
     }
-} 
+    //A kill count only for us + info
+    if (Entity.GetLocalPlayer() == RPG_iAttacker_index && Entity.GetLocalPlayer() != RPG_iVictim_index) {
+        //Simulating Exp
+        RPG_iExp = RPG_getExp;
+        //Frame count and transparency
+        RPG_iAlpha = 255;
+        //Reset if MAX (or remove if u want)
+        RPG_getExp = RPG_getExp + 20;
+        RPG_Level2 = RPG_Level2 + 20;
+    }
+}
 //==========================================================================================================\\
 
 //==========================================================================================================\\
 //Callback
 //------------------------------
-Cheat.RegisterCallback("Draw", "Draw")
+Cheat.RegisterCallback("Draw", "RPG_Draw")
 
 //here is tilestra's Callback
 //https://onetap.su/members/tilestra.54952/
 //------------------------------
-Global.RegisterCallback("player_death", "EVENT_DEATH");
-Global.RegisterCallback("round_start", "EVENT_ROUND_START");
-Global.RegisterCallback("player_spawned", "EVENT_PLAYER_SPAWN");
-Global.RegisterCallback("cs_intermission", "EVENT_MATCH_END");
-Global.RegisterCallback("cs_win_panel_match", "EVENT_MATCH_END");
+Global.RegisterCallback("player_death", "RPG_EVENT_DEATH");
+Global.RegisterCallback("round_start", "RPG_EVENT_ROUND_START");
+Global.RegisterCallback("player_spawned", "RPG_EVENT_PLAYER_SPAWN");
+Global.RegisterCallback("cs_intermission", "RPG_EVENT_MATCH_END");
+Global.RegisterCallback("cs_win_panel_match", "RPG_EVENT_MATCH_END");
 //==========================================================================================================\\
