@@ -197,7 +197,7 @@ function RPG_Draw() {
         RPG_Level_name: "Level",
         Health_text: health + "hp",
         Money_text: " | $" + money,
-        Level_text: player_name + " | Lever " + RPG_Level + " (+" + RPG_Level2 + "xp)",
+        Level_text: player_name + " | Level " + RPG_Level + " (+" + RPG_Level2 + "xp)",
     };
 
     const Level_w = Render.TextSize(text.Level_text, font)[0];
