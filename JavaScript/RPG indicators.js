@@ -17,7 +17,7 @@
 //Add New Table
 UI.AddSubTab(["Visuals", "SUBTAB_MGR"], "RPG indicators");
 
-//csgohvh.com
+//hvhbbs.com
 //welcome :3
 UI.AddSliderInt(["Visuals", "RPG indicators", "RPG indicators"], ">>-  RPG indicators -<<", 0, 0);
 UI.AddSliderInt(["Visuals", "RPG indicators", "RPG indicators"], ">>-  Create by Robonyantame  -<<", 0, 0);
