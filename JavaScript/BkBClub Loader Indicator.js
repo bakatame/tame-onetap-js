@@ -17,7 +17,7 @@
 //Add New Table
 UI.AddSubTab(["Visuals", "SUBTAB_MGR"], "BkBClub");
 
-//csgohvh.com
+//hvhbbs.com
 //welcome :3
 UI.AddSliderInt(["Visuals", "BkBClub", "BkBClub"], ">>-  BkBClub Loader Indicator  -<<", 0, 0);
 UI.AddSliderInt(["Visuals", "BkBClub", "BkBClub"], ">>-  Create by Robonyantame  -<<", 0, 0);
