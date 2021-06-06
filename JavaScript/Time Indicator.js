@@ -13,7 +13,7 @@
 //Add New Table
 UI.AddSubTab(["Visuals", "SUBTAB_MGR"], "Time Indicator");
 
-//csgohvh.com
+//hvhbbs.com
 //welcome :3
 UI.AddSliderInt(["Visuals", "Time Indicator", "Time Indicator"], ">>-  Time Indicator  -<<", 0, 0);
 UI.AddSliderInt(["Visuals", "Time Indicator", "Time Indicator"], ">>-  Create by Robonyantame  -<<", 0, 0);
